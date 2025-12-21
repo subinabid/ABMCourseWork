@@ -48,8 +48,89 @@ class Agents:
     confidence: float
 
 
+@app.class_definition
+# Experimenting with classes
+
+class Person:
+    """Name and friends of a person"""
+    name: str = ""
+    friends: list = []
+
+    def add_friend(self, friend: str):
+        self.friends.append(friend)
+
+
 @app.cell
 def _():
+    a = Person()
+    b = Person()
+    a.name = "Arun"
+    a.add_friend("X")
+    a.add_friend("Y")
+    a.add_friend("Z")
+
+    return a, b
+
+
+@app.cell
+def _(a):
+    a.name
+    return
+
+
+@app.cell
+def _(a):
+    a.friends
+    return
+
+
+@app.cell
+def _(a):
+    print(type(a))
+    print(type(a.name))
+    print(type(a.friends))
+    return
+
+
+@app.cell
+def _(b):
+    b.friends
+    return
+
+
+@app.cell
+def _(b):
+    b.add_friend("W")
+    return
+
+
+@app.cell
+def _(b):
+    b.friends
+    return
+
+
+@app.cell
+def _(a):
+    a.friends
+    return
+
+
+@app.cell
+def _():
+    Person.name
+    return
+
+
+@app.cell
+def _(a):
+    a.name
+    return
+
+
+@app.cell
+def _():
+    Person.__doc__
     return
 
 

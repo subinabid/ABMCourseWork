@@ -7,9 +7,10 @@ wheels/
 *.egg-info
 
 
-# Marimo generated files
+# Marimo / jupyter Notebook checkpoints
 __marimo__/
-
+.ipynb_checkpoints/
+.mypy_cache/
 
 # Virtual environments
 .venv
