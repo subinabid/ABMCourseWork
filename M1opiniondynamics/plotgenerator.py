@@ -1,4 +1,4 @@
-import environment
+import M1opiniondynamics.environment as environment
 from matplotlib import pyplot as plt
 
 env = environment.Environment()
