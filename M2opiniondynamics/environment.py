@@ -5,7 +5,6 @@ import agents
 import parameters as p
 import numpy as np  # type: ignore
 import igraph as ig  # type: ignore
-# import matplotlib.pyplot as plt  # type: ignore
 
 
 class Environment:
@@ -124,7 +123,7 @@ class Environment:
         """Run the time steps."""
         for t in range(p.TIME_STEPS):
             self.all_pair_interaction()  # Interaction phase
-            self.change_friends()  # Friendship update phase
+            # self.change_friends()  # Friendship update phase
             self.record_opinions()  # Record opinions
 
     def record_opinions(self):
@@ -137,13 +136,15 @@ class Environment:
             all_op.append(agent.return_opinion())
             friend_count.append(len(self.network[agent.ID]))
 
-        mean_op = np.mean(all_op)
-        std_op = np.std(all_op)
+        op_mean = np.mean(all_op)
+        op_sd = np.std(all_op)
+        op_min = np.min(all_op)
+        op_max = np.max(all_op)
         friends_mean = np.mean(friend_count)
         friends_sd = np.std(friend_count)
 
         self.opinions.append(
-            (mean_op, std_op, friends_mean, friends_sd)
+            (op_mean, op_sd, op_min, op_max, friends_mean, friends_sd)
         )  # Record mean and std dev as tuple
 
     def plot_network(self):

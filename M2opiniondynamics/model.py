@@ -9,7 +9,15 @@ def write_dynamics_to_csv():
     with open("time_dynamics_m2.csv", mode="w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(
-            ["Time Step", "Opinion Mean", "Opinion SD", "Friends Mean", "Friends SD"]
+            [
+                "Time Step",
+                "Opinion Mean",
+                "Opinion SD",
+                "Opinion Min",
+                "Opinion Max",
+                "Friends Mean",
+                "Friends SD",
+            ]
         )
         for t in range(len(env.opinions)):
             writer.writerow(
@@ -19,6 +27,8 @@ def write_dynamics_to_csv():
                     env.opinions[t][1],
                     env.opinions[t][2],
                     env.opinions[t][3],
+                    env.opinions[t][4],
+                    env.opinions[t][5],
                 ]
             )
 
@@ -34,10 +44,16 @@ def write_dynamics_to_csv():
             "3. Opinion SD: Standard deviation of opinions of all agents at that time step.\n"
         )
         readme.write(
-            "4. Friends Mean: Mean number of friends per agent at that time step.\n"
+            "4. Opinion Min: Minimum opinion of all agents at that time step.\n"
         )
         readme.write(
-            "5. Friends SD: Standard deviation of number of friends per agent at that time step.\n"
+            "5. Opinion Max: Maximum opinion of all agents at that time step.\n"
+        )
+        readme.write(
+            "6. Friends Mean: Mean number of friends per agent at that time step.\n"
+        )
+        readme.write(
+            "7. Friends SD: Standard deviation of number of friends per agent at that time step.\n"
         )
         readme.write("\nSimulation Parameters:\n")
         readme.write(f"Number of Agents: {environment.p.NUM_AGENTS}\n")
@@ -57,15 +73,14 @@ def plot_opinion_dynamics(filename="time_dynamics_m2.csv"):
         time_steps = []
         opinion_mean = []
         opinion_std = []
-        friends_mean = []
-        friends_std = []
-
+        opinion_min = []
+        opinion_max = []
         for row in reader:
             time_steps.append(int(row[0]))
             opinion_mean.append(float(row[1]))
             opinion_std.append(float(row[2]))
-            friends_mean.append(float(row[3]))
-            friends_std.append(float(row[4]))
+            opinion_min.append(float(row[3]))
+            opinion_max.append(float(row[4]))
         plt.plot(
             range(len(opinion_mean)),
             opinion_mean,
@@ -73,19 +88,28 @@ def plot_opinion_dynamics(filename="time_dynamics_m2.csv"):
         )
         plt.plot(range(len(opinion_std)), opinion_std, label="Opinion Std Deviation")
         plt.plot(
-            range(len(friends_mean)),
-            friends_mean,
-            label="Friends Mean",
+            range(len(opinion_min)),
+            opinion_min,
+            label="Opinion Min",
         )
         plt.plot(
-            range(len(friends_std)),
-            friends_std,
-            label="Friends Std Deviation",
+            range(len(opinion_max)),
+            opinion_max,
+            label="Opinion Max",
         )
+
         plt.ylabel("Value")
         plt.xlabel("Time Steps")
         plt.title("Opinion Dynamics Over Time")
         plt.legend()
+        plt.figtext(
+            0.5,
+            0.01,
+            f"\n Parameters: Agents={environment.p.NUM_AGENTS}, Prop Interactions={environment.p.PROP_INTERACTIONS}",
+            wrap=True,
+            horizontalalignment="center",
+            fontsize=8,
+        )
         plt.savefig("time_dynamics_m2.png")
         plt.close()
 
