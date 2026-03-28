@@ -1,0 +1,5 @@
+"""Model parameters for M6Study."""
+
+NUMBER_OF_AGENTS = 20
+NUMBER_OF_TIME_STEPS = 50
+FRIENDSHIP_THRESHOLD = 0.6
